@@ -16,8 +16,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     // MARK: - Variables
 
     let sceneView = ARSCNView()
-    let previewView  = UIImageView()
+    let previewView = UIImageView()
     var currentBuffer: CVPixelBuffer?
+    let redView = UIView()
 
     let visionQueue = DispatchQueue(label: "com.viseo.ARML.visionqueue")
 
@@ -26,7 +27,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         do {
             let model = try VNCoreMLModel(for: HandModel().model)
             let request = VNCoreMLRequest(model: model)
-            request.imageCropAndScaleOption = VNImageCropAndScaleOption.scaleFit
+            request.imageCropAndScaleOption = VNImageCropAndScaleOption.scaleFill
             return request
         } catch {
             fatalError("can't load Vision ML model: \(error)")
@@ -41,6 +42,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         view = sceneView
 
         sceneView.addSubview(previewView)
+
+        sceneView.addSubview(redView)
+
+        redView.backgroundColor = UIColor.red
+        redView.translatesAutoresizingMaskIntoConstraints = false
+        redView.widthAnchor.constraint(equalToConstant: 10).isActive = true
+        redView.heightAnchor.constraint(equalToConstant: 10).isActive = true
 
         previewView.translatesAutoresizingMaskIntoConstraints = false
         previewView.widthAnchor.constraint(equalToConstant: 112).isActive = true
@@ -121,8 +129,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
 
     private func detectHand() {
-        let orientation = CGImagePropertyOrientation(rawValue: UInt32(UIDevice.current.orientation.rawValue))
-
+        // why right orientation?
         let requestHandler = VNImageRequestHandler(cvPixelBuffer: currentBuffer!, orientation: .right)
 
         visionQueue.async {
@@ -132,11 +139,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 fatalError("unexpected result type from VNCoreMLRequest")
             }
 
-            let previewImage = UIImage(pixelBuffer: observation.pixelBuffer)
+            //let previewImage = UIImage(pixelBuffer: observation.pixelBuffer)
+            let foundPoint = observation.pixelBuffer.search()
 
             DispatchQueue.main.async {
-                self.previewView.image = previewImage
+                //self.previewView.image = previewImage
                 self.currentBuffer = nil
+
+                if let point = foundPoint {
+                    let imagePoint = VNImagePointForNormalizedPoint(point, Int(self.view.bounds.size.width), Int(self.view.bounds.size.height))
+                    self.redView.isHidden = false
+                    self.redView.center = imagePoint
+                } else {
+                    self.redView.isHidden = true
+                }
             }
         }
     }
