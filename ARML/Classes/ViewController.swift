@@ -7,17 +7,47 @@
 //
 
 import ARKit
+import CoreML
 import SceneKit
 import UIKit
+import Vision
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
+    // MARK: - Variables
+
     let sceneView = ARSCNView()
+    let previewView  = UIImageView()
+    var currentBuffer: CVPixelBuffer?
+
+    let visionQueue = DispatchQueue(label: "com.viseo.ARML.visionqueue")
+
+    lazy var predictionRequest: VNCoreMLRequest = {
+        // Load the ML model through its generated class and create a Vision request for it.
+        do {
+            let model = try VNCoreMLModel(for: HandModel().model)
+            let request = VNCoreMLRequest(model: model)
+            request.imageCropAndScaleOption = VNImageCropAndScaleOption.scaleFit
+            return request
+        } catch {
+            fatalError("can't load Vision ML model: \(error)")
+        }
+    }()
+
+    // MARK: - Lifecycle
 
     override func loadView() {
         super.loadView()
 
         view = sceneView
 
+        sceneView.addSubview(previewView)
+
+        previewView.translatesAutoresizingMaskIntoConstraints = false
+        previewView.widthAnchor.constraint(equalToConstant: 112).isActive = true
+        previewView.heightAnchor.constraint(equalToConstant: 112).isActive = true
+
+        previewView.backgroundColor = UIColor.white
+        previewView.bottomAnchor.constraint(equalTo: sceneView.bottomAnchor).isActive = true
     }
 
     override func viewDidLoad() {
@@ -44,6 +74,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         // Run the view's session
         sceneView.session.run(configuration)
+
+        sceneView.session.delegate = self
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -74,5 +106,38 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     func sessionInterruptionEnded(_: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
+    }
+
+    // MARK: - ARSessionDelegate
+
+    func session(_: ARSession, didUpdate frame: ARFrame) {
+        guard currentBuffer == nil, case .normal = frame.camera.trackingState else {
+            return
+        }
+
+        // Retain the image buffer for Vision processing.
+        currentBuffer = frame.capturedImage
+        detectHand()
+    }
+
+    private func detectHand() {
+        let orientation = CGImagePropertyOrientation(rawValue: UInt32(UIDevice.current.orientation.rawValue))
+
+        let requestHandler = VNImageRequestHandler(cvPixelBuffer: currentBuffer!, orientation: .right)
+
+        visionQueue.async {
+            try? requestHandler.perform([self.predictionRequest])
+
+            guard let observation = self.predictionRequest.results?.first as? VNPixelBufferObservation else {
+                fatalError("unexpected result type from VNCoreMLRequest")
+            }
+
+            let previewImage = UIImage(pixelBuffer: observation.pixelBuffer)
+
+            DispatchQueue.main.async {
+                self.previewView.image = previewImage
+                self.currentBuffer = nil
+            }
+        }
     }
 }

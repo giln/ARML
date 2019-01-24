@@ -11,6 +11,8 @@
 		A7A9EF4821F9F77E00604D4F /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = A7A9EF4721F9F77E00604D4F /* art.scnassets */; };
 		A7A9EF4A21F9F77F00604D4F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF4921F9F77F00604D4F /* ViewController.swift */; };
 		A7A9EF5221F9F78200604D4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7A9EF5021F9F78200604D4F /* LaunchScreen.storyboard */; };
+		A7A9EF6021FA05FE00604D4F /* HandModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF5F21FA05FE00604D4F /* HandModel.mlmodel */; };
+		A7A9EF6321FA0F9F00604D4F /* UIImage+CVPixelBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF6221FA0F9F00604D4F /* UIImage+CVPixelBuffer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		A7A9EF5121F9F78200604D4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A7A9EF5321F9F78200604D4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7A9EF5A21F9FB5500604D4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A7A9EF5F21FA05FE00604D4F /* HandModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = HandModel.mlmodel; sourceTree = "<group>"; };
+		A7A9EF6221FA0F9F00604D4F /* UIImage+CVPixelBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CVPixelBuffer.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,7 @@
 		A7A9EF5921F9FB4500604D4F /* Ressources */ = {
 			isa = PBXGroup;
 			children = (
+				A7A9EF5E21FA05FE00604D4F /* CoreML */,
 				A7A9EF5021F9F78200604D4F /* LaunchScreen.storyboard */,
 				A7A9EF5A21F9FB5500604D4F /* Assets.xcassets */,
 				A7A9EF4721F9F77E00604D4F /* art.scnassets */,
@@ -74,6 +79,7 @@
 		A7A9EF5B21F9FB7800604D4F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				A7A9EF6121FA0F8500604D4F /* Helpers */,
 				A7A9EF4921F9F77F00604D4F /* ViewController.swift */,
 			);
 			path = Classes;
@@ -85,6 +91,22 @@
 				A7A9EF5321F9F78200604D4F /* Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A7A9EF5E21FA05FE00604D4F /* CoreML */ = {
+			isa = PBXGroup;
+			children = (
+				A7A9EF5F21FA05FE00604D4F /* HandModel.mlmodel */,
+			);
+			path = CoreML;
+			sourceTree = "<group>";
+		};
+		A7A9EF6121FA0F8500604D4F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				A7A9EF6221FA0F9F00604D4F /* UIImage+CVPixelBuffer.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,8 +179,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7A9EF6021FA05FE00604D4F /* HandModel.mlmodel in Sources */,
 				A7A9EF4A21F9F77F00604D4F /* ViewController.swift in Sources */,
 				A7A9EF4621F9F77E00604D4F /* AppDelegate.swift in Sources */,
+				A7A9EF6321FA0F9F00604D4F /* UIImage+CVPixelBuffer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
