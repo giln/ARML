@@ -295,7 +295,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 fatalError("unexpected result type from VNCoreMLRequest")
             }
 
-            let previewImage = UIImage(pixelBuffer: observation.pixelBuffer)
+            let previewImage = UIImage(ciImage: CIImage(cvPixelBuffer: observation.pixelBuffer))
             let foundPoint = observation.pixelBuffer.search()
 
             DispatchQueue.main.async {

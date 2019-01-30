@@ -7,16 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A76557202201B50B00C7627C /* HandDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765571F2201B50B00C7627C /* HandDetector.swift */; };
 		A7A9EF4621F9F77E00604D4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF4521F9F77E00604D4F /* AppDelegate.swift */; };
 		A7A9EF4821F9F77E00604D4F /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = A7A9EF4721F9F77E00604D4F /* art.scnassets */; };
 		A7A9EF4A21F9F77F00604D4F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF4921F9F77F00604D4F /* ViewController.swift */; };
 		A7A9EF5221F9F78200604D4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7A9EF5021F9F78200604D4F /* LaunchScreen.storyboard */; };
 		A7A9EF6021FA05FE00604D4F /* HandModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF5F21FA05FE00604D4F /* HandModel.mlmodel */; };
-		A7A9EF6321FA0F9F00604D4F /* UIImage+CVPixelBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF6221FA0F9F00604D4F /* UIImage+CVPixelBuffer.swift */; };
 		A7A9EF6521FA156500604D4F /* CVPixelBuffer+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF6421FA156500604D4F /* CVPixelBuffer+Helpers.swift */; };
+		A7A9EF6721FF513800604D4F /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF6621FF513800604D4F /* ARViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A765571F2201B50B00C7627C /* HandDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandDetector.swift; sourceTree = "<group>"; };
 		A7A9EF4221F9F77E00604D4F /* ARML.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARML.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7A9EF4521F9F77E00604D4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7A9EF4721F9F77E00604D4F /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -25,8 +27,8 @@
 		A7A9EF5321F9F78200604D4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7A9EF5A21F9FB5500604D4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7A9EF5F21FA05FE00604D4F /* HandModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = HandModel.mlmodel; sourceTree = "<group>"; };
-		A7A9EF6221FA0F9F00604D4F /* UIImage+CVPixelBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CVPixelBuffer.swift"; sourceTree = "<group>"; };
 		A7A9EF6421FA156500604D4F /* CVPixelBuffer+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helpers.swift"; sourceTree = "<group>"; };
+		A7A9EF6621FF513800604D4F /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,8 @@
 			children = (
 				A7A9EF6121FA0F8500604D4F /* Helpers */,
 				A7A9EF4921F9F77F00604D4F /* ViewController.swift */,
+				A7A9EF6621FF513800604D4F /* ARViewController.swift */,
+				A765571F2201B50B00C7627C /* HandDetector.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -106,7 +110,6 @@
 		A7A9EF6121FA0F8500604D4F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				A7A9EF6221FA0F9F00604D4F /* UIImage+CVPixelBuffer.swift */,
 				A7A9EF6421FA156500604D4F /* CVPixelBuffer+Helpers.swift */,
 			);
 			path = Helpers;
@@ -185,8 +188,9 @@
 				A7A9EF6021FA05FE00604D4F /* HandModel.mlmodel in Sources */,
 				A7A9EF6521FA156500604D4F /* CVPixelBuffer+Helpers.swift in Sources */,
 				A7A9EF4A21F9F77F00604D4F /* ViewController.swift in Sources */,
+				A7A9EF6721FF513800604D4F /* ARViewController.swift in Sources */,
 				A7A9EF4621F9F77E00604D4F /* AppDelegate.swift in Sources */,
-				A7A9EF6321FA0F9F00604D4F /* UIImage+CVPixelBuffer.swift in Sources */,
+				A76557202201B50B00C7627C /* HandDetector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
