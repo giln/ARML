@@ -29,6 +29,8 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
 
         // Enable Horizontal plane detection
         configuration.planeDetection = .horizontal
+        
+        sceneView.autoenablesDefaultLighting = true
 
         // We want to receive the frames from the video
         sceneView.session.delegate = self
@@ -39,11 +41,37 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
         // The delegate is used to receive ARAnchors when they are detected.
         sceneView.delegate = self
 
+        sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewDidTap(recognizer:))))
+
         view.addSubview(previewView)
 
         previewView.translatesAutoresizingMaskIntoConstraints = false
         previewView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         previewView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+
+    // MARK: - Actions
+
+    @objc func viewDidTap(recognizer: UITapGestureRecognizer) {
+        // We get the tap location as a 2D Screen coordinate
+        let tapLocation = recognizer.location(in: sceneView)
+
+        // To transform our 2D Screen coordinates to 3D screen coordinates we use hitTest function
+        let hitTestResults = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
+
+        // We cast a ray from the point tapped on screen, and we return any intersection with existing planes
+        guard let hitTestResult = hitTestResults.first else { return }
+
+        let ball = BallNode(radius: 0.05)
+
+        // We place the ball at hit point
+        ball.simdTransform = hitTestResult.worldTransform
+        // We place it slightly (5cm) above the plane
+        ball.position.y += 0.05
+        
+        // We add the node to the scene
+        sceneView.scene.rootNode.addChildNode(ball)
+        
     }
 
     // MARK: - ARSessionDelegate

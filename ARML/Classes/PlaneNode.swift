@@ -9,9 +9,9 @@
 import ARKit
 import SceneKit
 
-class PlaneNode: SCNNode {
+public class PlaneNode: SCNNode {
     // We can force cast here since ARKit does not work on non metal devices
-    let planeGeometry = ARSCNPlaneGeometry(device: MTLCreateSystemDefaultDevice()!)
+    public let planeGeometry = ARSCNPlaneGeometry(device: MTLCreateSystemDefaultDevice()!)
 
     // MARK: - Lifecycle
 
