@@ -29,11 +29,12 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
 
         // Enable Horizontal plane detection
         configuration.planeDetection = .horizontal
-        
+
         sceneView.autoenablesDefaultLighting = true
 
         // We want to receive the frames from the video
         sceneView.session.delegate = self
+        //sceneView.debugOptions = [.showPhysicsShapes]
 
         // Run the session with the configuration
         sceneView.session.run(configuration)
@@ -66,8 +67,8 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
 
         // We place the ball at hit point
         ball.simdTransform = hitTestResult.worldTransform
-        // We place it slightly (5cm) above the plane
-        ball.position.y += 0.05
+        // We place it slightly (20cm) above the plane
+        ball.position.y += 0.20
         
         // We add the node to the scene
         sceneView.scene.rootNode.addChildNode(ball)
@@ -131,10 +132,7 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
             let planeNode = node as? PlaneNode else {
             return
         }
-
-        // Update geometry the first time
-        planeNode.planeGeometry?.update(from: planeAnchor.geometry)
-
+        planeNode.update(from: planeAnchor)
     }
 
     func renderer(_: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
@@ -142,8 +140,7 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
             let planeNode = node as? PlaneNode else {
             return
         }
-
-        // We modify our plane geometry each time ARKit updates the shape of a existing plane
-        planeNode.planeGeometry?.update(from: planeAnchor.geometry)
+        planeNode.update(from: planeAnchor)
     }
+
 }

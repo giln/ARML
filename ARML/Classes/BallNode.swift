@@ -25,5 +25,8 @@ public class BallNode: SCNNode {
         sphere.firstMaterial = reflectiveMaterial
 
         self.geometry = sphere
+
+        // We assign a dynamic physics body to our ball
+        physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
     }
 }

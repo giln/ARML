@@ -10,26 +10,25 @@ import ARKit
 import SceneKit
 
 public class PlaneNode: SCNNode {
-    // We can force cast here since ARKit does not work on non metal devices
-    public let planeGeometry = ARSCNPlaneGeometry(device: MTLCreateSystemDefaultDevice()!)
 
-    // MARK: - Lifecycle
+    // MARK: - Public functions
 
-    override init() {
-        super.init()
-        commonInit()
-    }
+    public func update(from planeAnchor: ARPlaneAnchor) {
+        // We need to create a new geometry each time because it does not seem to update correctly for physics
+        guard let device = MTLCreateSystemDefaultDevice(),
+            let geom = ARSCNPlaneGeometry(device: device) else {
+                fatalError()
+        }
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
+        geom.firstMaterial?.diffuse.contents = UIColor.blue.withAlphaComponent(0.3)
+        geom.update(from: planeAnchor.geometry)
 
-    private func commonInit() {
-        planeGeometry?.firstMaterial?.diffuse.contents = UIColor.blue.withAlphaComponent(0.3)
+        // We modify our plane geometry each time ARKit updates the shape of an existing plane
+        geometry = geom
 
-        // PlaneNode geometry is an ARSCNPlaneGeometry
-        // ARSCNPlaneGeometry is special type of geometry that follows the shape of plane detected by ARKit
-        geometry = planeGeometry
+        // We have to specify we want to use the bounding box or it does not work
+        let shape = SCNPhysicsShape(geometry: geom, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.boundingBox])
+
+        physicsBody = SCNPhysicsBody(type: .static, shape: shape)
     }
 }
