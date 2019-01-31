@@ -10,7 +10,7 @@ import ARKit
 import CoreML
 import Vision
 
-class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
+public class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
     // MARK: - Variables
 
     let sceneView = ARSCNView()
@@ -19,7 +19,7 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
 
     // MARK: - Lifecycle
 
-    override func loadView() {
+    override public func loadView() {
         super.loadView()
 
         view = sceneView
@@ -31,6 +31,8 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
         configuration.planeDetection = .horizontal
 
         sceneView.autoenablesDefaultLighting = true
+        // Disabled because of random crash
+        configuration.environmentTexturing = .none
 
         // We want to receive the frames from the video
         sceneView.session.delegate = self
@@ -49,11 +51,16 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
         previewView.translatesAutoresizingMaskIntoConstraints = false
         previewView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         previewView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+
+        // Add spotlight to cast shadows
+        let spotlightNode = SpotlightNode()
+        spotlightNode.position = SCNVector3(10, 10, 0)
+        sceneView.scene.rootNode.addChildNode(spotlightNode)
     }
 
     // MARK: - Actions
 
-    @objc func viewDidTap(recognizer: UITapGestureRecognizer) {
+    @objc private func viewDidTap(recognizer: UITapGestureRecognizer) {
         // We get the tap location as a 2D Screen coordinate
         let tapLocation = recognizer.location(in: sceneView)
 
@@ -77,7 +84,7 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
 
     // MARK: - ARSessionDelegate
 
-    func session(_: ARSession, didUpdate frame: ARFrame) {
+    public func session(_: ARSession, didUpdate frame: ARFrame) {
         // We return early if currentBuffer is not nil or the tracking state of camera is not normal
         guard currentBuffer == nil, case .normal = frame.camera.trackingState else {
             return
@@ -120,14 +127,14 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
 
     // MARK: - ARSCNViewDelegate
 
-    func renderer(_: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+    public func renderer(_: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         guard let _ = anchor as? ARPlaneAnchor else { return nil }
 
         // We return a special type of SCNNode for ARPlaneAnchors
         return PlaneNode()
     }
 
-    func renderer(_: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+    public func renderer(_: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor,
             let planeNode = node as? PlaneNode else {
             return
@@ -135,7 +142,7 @@ class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
         planeNode.update(from: planeAnchor)
     }
 
-    func renderer(_: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+    public func renderer(_: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor,
             let planeNode = node as? PlaneNode else {
             return

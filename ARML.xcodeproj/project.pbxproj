@@ -10,6 +10,7 @@
 		A76557202201B50B00C7627C /* HandDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765571F2201B50B00C7627C /* HandDetector.swift */; };
 		A76557222202001100C7627C /* PlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76557212202001100C7627C /* PlaneNode.swift */; };
 		A76557242202F0DA00C7627C /* BallNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76557232202F0DA00C7627C /* BallNode.swift */; };
+		A7655726220330FC00C7627C /* SpotlightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7655725220330FC00C7627C /* SpotlightNode.swift */; };
 		A7A9EF4621F9F77E00604D4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF4521F9F77E00604D4F /* AppDelegate.swift */; };
 		A7A9EF4821F9F77E00604D4F /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = A7A9EF4721F9F77E00604D4F /* art.scnassets */; };
 		A7A9EF4A21F9F77F00604D4F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF4921F9F77F00604D4F /* ViewController.swift */; };
@@ -23,6 +24,7 @@
 		A765571F2201B50B00C7627C /* HandDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandDetector.swift; sourceTree = "<group>"; };
 		A76557212202001100C7627C /* PlaneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneNode.swift; sourceTree = "<group>"; };
 		A76557232202F0DA00C7627C /* BallNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallNode.swift; sourceTree = "<group>"; };
+		A7655725220330FC00C7627C /* SpotlightNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightNode.swift; sourceTree = "<group>"; };
 		A7A9EF4221F9F77E00604D4F /* ARML.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARML.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7A9EF4521F9F77E00604D4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7A9EF4721F9F77E00604D4F /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				A765571F2201B50B00C7627C /* HandDetector.swift */,
 				A76557212202001100C7627C /* PlaneNode.swift */,
 				A76557232202F0DA00C7627C /* BallNode.swift */,
+				A7655725220330FC00C7627C /* SpotlightNode.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7655726220330FC00C7627C /* SpotlightNode.swift in Sources */,
 				A76557222202001100C7627C /* PlaneNode.swift in Sources */,
 				A7A9EF6021FA05FE00604D4F /* HandModel.mlmodel in Sources */,
 				A76557242202F0DA00C7627C /* BallNode.swift in Sources */,
