@@ -11,12 +11,12 @@
 		A76557222202001100C7627C /* PlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76557212202001100C7627C /* PlaneNode.swift */; };
 		A76557242202F0DA00C7627C /* BallNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76557232202F0DA00C7627C /* BallNode.swift */; };
 		A7655726220330FC00C7627C /* SpotlightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7655725220330FC00C7627C /* SpotlightNode.swift */; };
+		A76557282203458B00C7627C /* CVPixelBuffer+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76557272203458B00C7627C /* CVPixelBuffer+Search.swift */; };
+		A765572A2203476200C7627C /* TouchNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76557292203476200C7627C /* TouchNode.swift */; };
 		A7A9EF4621F9F77E00604D4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF4521F9F77E00604D4F /* AppDelegate.swift */; };
 		A7A9EF4821F9F77E00604D4F /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = A7A9EF4721F9F77E00604D4F /* art.scnassets */; };
-		A7A9EF4A21F9F77F00604D4F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF4921F9F77F00604D4F /* ViewController.swift */; };
 		A7A9EF5221F9F78200604D4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7A9EF5021F9F78200604D4F /* LaunchScreen.storyboard */; };
 		A7A9EF6021FA05FE00604D4F /* HandModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF5F21FA05FE00604D4F /* HandModel.mlmodel */; };
-		A7A9EF6521FA156500604D4F /* CVPixelBuffer+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF6421FA156500604D4F /* CVPixelBuffer+Helpers.swift */; };
 		A7A9EF6721FF513800604D4F /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF6621FF513800604D4F /* ARViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,15 +25,15 @@
 		A76557212202001100C7627C /* PlaneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneNode.swift; sourceTree = "<group>"; };
 		A76557232202F0DA00C7627C /* BallNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallNode.swift; sourceTree = "<group>"; };
 		A7655725220330FC00C7627C /* SpotlightNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightNode.swift; sourceTree = "<group>"; };
+		A76557272203458B00C7627C /* CVPixelBuffer+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Search.swift"; sourceTree = "<group>"; };
+		A76557292203476200C7627C /* TouchNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchNode.swift; sourceTree = "<group>"; };
 		A7A9EF4221F9F77E00604D4F /* ARML.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARML.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7A9EF4521F9F77E00604D4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7A9EF4721F9F77E00604D4F /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		A7A9EF4921F9F77F00604D4F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A7A9EF5121F9F78200604D4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A7A9EF5321F9F78200604D4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7A9EF5A21F9FB5500604D4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7A9EF5F21FA05FE00604D4F /* HandModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = HandModel.mlmodel; sourceTree = "<group>"; };
-		A7A9EF6421FA156500604D4F /* CVPixelBuffer+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helpers.swift"; sourceTree = "<group>"; };
 		A7A9EF6621FF513800604D4F /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,12 +90,12 @@
 			isa = PBXGroup;
 			children = (
 				A7A9EF6121FA0F8500604D4F /* Helpers */,
-				A7A9EF4921F9F77F00604D4F /* ViewController.swift */,
 				A7A9EF6621FF513800604D4F /* ARViewController.swift */,
 				A765571F2201B50B00C7627C /* HandDetector.swift */,
 				A76557212202001100C7627C /* PlaneNode.swift */,
 				A76557232202F0DA00C7627C /* BallNode.swift */,
 				A7655725220330FC00C7627C /* SpotlightNode.swift */,
+				A76557292203476200C7627C /* TouchNode.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -119,7 +119,7 @@
 		A7A9EF6121FA0F8500604D4F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				A7A9EF6421FA156500604D4F /* CVPixelBuffer+Helpers.swift */,
+				A76557272203458B00C7627C /* CVPixelBuffer+Search.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -198,11 +198,11 @@
 				A76557222202001100C7627C /* PlaneNode.swift in Sources */,
 				A7A9EF6021FA05FE00604D4F /* HandModel.mlmodel in Sources */,
 				A76557242202F0DA00C7627C /* BallNode.swift in Sources */,
-				A7A9EF6521FA156500604D4F /* CVPixelBuffer+Helpers.swift in Sources */,
-				A7A9EF4A21F9F77F00604D4F /* ViewController.swift in Sources */,
+				A765572A2203476200C7627C /* TouchNode.swift in Sources */,
 				A7A9EF6721FF513800604D4F /* ARViewController.swift in Sources */,
 				A7A9EF4621F9F77E00604D4F /* AppDelegate.swift in Sources */,
 				A76557202201B50B00C7627C /* HandDetector.swift in Sources */,
+				A76557282203458B00C7627C /* CVPixelBuffer+Search.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

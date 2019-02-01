@@ -16,6 +16,8 @@ public class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDel
     let sceneView = ARSCNView()
     var currentBuffer: CVPixelBuffer?
     var previewView = UIImageView()
+    let touchNode = TouchNode()
+    let ball = BallNode(radius: 0.05)
 
     // MARK: - Lifecycle
 
@@ -36,7 +38,6 @@ public class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDel
 
         // We want to receive the frames from the video
         sceneView.session.delegate = self
-        //sceneView.debugOptions = [.showPhysicsShapes]
 
         // Run the session with the configuration
         sceneView.session.run(configuration)
@@ -56,11 +57,19 @@ public class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDel
         let spotlightNode = SpotlightNode()
         spotlightNode.position = SCNVector3(10, 10, 0)
         sceneView.scene.rootNode.addChildNode(spotlightNode)
+
+        // Add touchNode
+        sceneView.scene.rootNode.addChildNode(touchNode)
     }
 
     // MARK: - Actions
 
     @objc private func viewDidTap(recognizer: UITapGestureRecognizer) {
+
+        // We recycle the ball node
+        ball.removeFromParentNode()
+        ball.physicsBody?.clearAllForces()
+
         // We get the tap location as a 2D Screen coordinate
         let tapLocation = recognizer.location(in: sceneView)
 
@@ -70,8 +79,6 @@ public class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDel
         // We cast a ray from the point tapped on screen, and we return any intersection with existing planes
         guard let hitTestResult = hitTestResults.first else { return }
 
-        let ball = BallNode(radius: 0.05)
-
         // We place the ball at hit point
         ball.simdTransform = hitTestResult.worldTransform
         // We place it slightly (20cm) above the plane
@@ -79,7 +86,6 @@ public class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDel
         
         // We add the node to the scene
         sceneView.scene.rootNode.addChildNode(ball)
-        
     }
 
     // MARK: - ARSessionDelegate
@@ -107,12 +113,32 @@ public class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDel
         handDetector.performDetection(inputBuffer: buffer) { outputBuffer, _ in
             // Here we are on a background thread
             var previewImage: UIImage?
+            var normalizedFingerTip: CGPoint?
 
             defer {
                 DispatchQueue.main.async {
                     self.previewView.image = previewImage
+
                     // Release currentBuffer when finished to allow processing next frame
                     self.currentBuffer = nil
+
+                    self.touchNode.isHidden = true
+                    
+                    guard let tipPoint = normalizedFingerTip else {
+                        return
+                    }
+
+                    // We use a coreVideo function to get the image coordinate from the normalized point
+                    let imageFingerPoint = VNImagePointForNormalizedPoint(tipPoint, Int(self.view.bounds.size.width), Int(self.view.bounds.size.height))
+
+                    // And here again we need to hitTest to translate from 2D coordinates to 3D coordinates
+                    let hitTestResults = self.sceneView.hitTest(imageFingerPoint, types: .existingPlaneUsingExtent)
+                    guard let hitTestResult = hitTestResults.first else { return }
+
+                    // We position our touchNode slighlty above the plane (1cm).
+                    self.touchNode.simdTransform = hitTestResult.worldTransform
+                    self.touchNode.position.y += 0.01
+                    self.touchNode.isHidden = false
                 }
             }
 
@@ -122,6 +148,9 @@ public class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDel
 
             // Create UIImage from CVPixelBuffer
             previewImage = UIImage(ciImage: CIImage(cvPixelBuffer: outBuffer))
+
+            normalizedFingerTip = outBuffer.searchTopPoint()
+
         }
     }
 

@@ -35,8 +35,11 @@ public class PlaneNode: SCNNode {
         castsShadow = false
 
         // We have to specify we want to use the bounding box or it does not work
-        let shape = SCNPhysicsShape(geometry: geom, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.boundingBox, SCNPhysicsShape.Option.collisionMargin : -0.02])
+        let shape = SCNPhysicsShape(geometry: geom, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.boundingBox, SCNPhysicsShape.Option.collisionMargin : 0.0])
 
         physicsBody = SCNPhysicsBody(type: .static, shape: shape)
+
+        scale = SCNVector3(0.9,1.0,0.9)
+
     }
 }
