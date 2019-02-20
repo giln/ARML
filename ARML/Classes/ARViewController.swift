@@ -8,13 +8,13 @@
 
 import ARKit
 
-public class ARViewController: UIViewController {
+open class ARViewController: UIViewController, ARSessionDelegate {
     // MARK: - Variables
-    let sceneView = ARSCNView()
+    private let sceneView = ARSCNView()
 
     // MARK: - Lifecycle
 
-    public override func loadView() {
+    open override func loadView() {
         super.loadView()
 
         view = sceneView
@@ -22,7 +22,16 @@ public class ARViewController: UIViewController {
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
 
+        // We want to receive the frames from the video
+        sceneView.session.delegate = self
+
         // Run the session with the configuration
         sceneView.session.run(configuration)
+    }
+
+    // MARK: - ARSessionDelegate
+
+    open func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        // This is where we will analyse our frame
     }
 }
