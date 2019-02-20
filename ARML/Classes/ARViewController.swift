@@ -10,7 +10,9 @@ import ARKit
 
 open class ARViewController: UIViewController, ARSessionDelegate {
     // MARK: - Variables
+
     private let sceneView = ARSCNView()
+    private var currentBuffer: CVPixelBuffer?
 
     // MARK: - Lifecycle
 
@@ -31,7 +33,24 @@ open class ARViewController: UIViewController, ARSessionDelegate {
 
     // MARK: - ARSessionDelegate
 
-    open func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        // This is where we will analyse our frame
+    open func session(_: ARSession, didUpdate frame: ARFrame) {
+        // We return early if currentBuffer is not nil or the tracking state of camera is not normal
+        guard currentBuffer == nil, case .normal = frame.camera.trackingState else {
+            return
+        }
+
+        // Retain the image buffer for Vision processing.
+        currentBuffer = frame.capturedImage
+
+        startDetection()
+    }
+
+    // MARK: - Private functions
+
+    private func startDetection() {
+        // Here we will do our CoreML request on currentBuffer
+
+        // Release currentBuffer to allow processing next frame
+        currentBuffer = nil
     }
 }
