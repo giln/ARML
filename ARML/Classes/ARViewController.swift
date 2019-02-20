@@ -8,7 +8,7 @@
 
 import ARKit
 
-open class ARViewController: UIViewController, ARSessionDelegate {
+open class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
     // MARK: - Variables
 
     private let sceneView = ARSCNView()
@@ -25,6 +25,12 @@ open class ARViewController: UIViewController, ARSessionDelegate {
 
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
+
+        // Enable Horizontal plane detection
+        configuration.planeDetection = .horizontal
+
+        // The delegate is used to receive ARAnchors when they are detected.
+        sceneView.delegate = self
 
         // We want to receive the frames from the video
         sceneView.session.delegate = self
@@ -71,5 +77,30 @@ open class ARViewController: UIViewController, ARSessionDelegate {
             // Release currentBuffer to allow processing next frame
             self.currentBuffer = nil
         }
+    }
+
+    // MARK: - ARSCNViewDelegate
+
+    public func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+        guard let _ = anchor as? ARPlaneAnchor else { return nil }
+
+        // We return a special type of SCNNode for ARPlaneAnchors
+        return PlaneNode()
+    }
+
+    public func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard let planeAnchor = anchor as? ARPlaneAnchor,
+            let planeNode = node as? PlaneNode else {
+                return
+        }
+        planeNode.update(from: planeAnchor)
+    }
+
+    public func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        guard let planeAnchor = anchor as? ARPlaneAnchor,
+            let planeNode = node as? PlaneNode else {
+                return
+        }
+        planeNode.update(from: planeAnchor)
     }
 }
