@@ -21,13 +21,13 @@ public class PlaneNode: SCNNode {
         }
 
         // This allows the material to be invisible but still receive shadows and perform occlusion (hide objects behind them).
-//        let material = SCNMaterial()
-//        material.lightingModel = .constant
-//        material.writesToDepthBuffer = true
-//        material.colorBufferWriteMask = []
-//        geom.firstMaterial = material
+        let material = SCNMaterial()
+        material.lightingModel = .constant
+        material.writesToDepthBuffer = true
+        material.colorBufferWriteMask = []
+        geom.firstMaterial = material
 
-        geom.firstMaterial?.diffuse.contents = UIColor.blue.withAlphaComponent(0.3)
+        //geom.firstMaterial?.diffuse.contents = UIColor.blue.withAlphaComponent(0.3)
         geom.update(from: planeAnchor.geometry)
 
         // We modify our plane geometry each time ARKit updates the shape of an existing plane

@@ -29,6 +29,9 @@ open class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDeleg
         // Enable Horizontal plane detection
         configuration.planeDetection = .horizontal
 
+        // Disabled because of random crash
+        configuration.environmentTexturing = .none
+
         // The delegate is used to receive ARAnchors when they are detected.
         sceneView.delegate = self
 
@@ -48,6 +51,10 @@ open class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDeleg
 
         sceneView.autoenablesDefaultLighting = true
 
+        // Add spotlight to cast shadows
+        let spotlightNode = SpotlightNode()
+        spotlightNode.position = SCNVector3(10, 10, 0)
+        sceneView.scene.rootNode.addChildNode(spotlightNode)
     }
 
     // MARK: - Actions
