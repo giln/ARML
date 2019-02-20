@@ -7,6 +7,7 @@
 //
 
 import ARKit
+import Vision
 
 open class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDelegate {
     // MARK: - Variables
@@ -15,6 +16,7 @@ open class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDeleg
     private var currentBuffer: CVPixelBuffer?
     private let handDetector = HandDetector()
     private let previewView = UIImageView()
+    private let touchNode = TouchNode()
 
     // MARK: - Lifecycle
 
@@ -55,6 +57,9 @@ open class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDeleg
         let spotlightNode = SpotlightNode()
         spotlightNode.position = SCNVector3(10, 10, 0)
         sceneView.scene.rootNode.addChildNode(spotlightNode)
+
+        // Add touchNode
+        sceneView.scene.rootNode.addChildNode(touchNode)
     }
 
     // MARK: - Actions
@@ -104,7 +109,27 @@ open class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDeleg
 
             if let outputBuffer = outputPixelBuffer {
 
+                self.touchNode.isHidden = true
+
+                let normalizedFingerTip = outputBuffer.searchTopPoint()
+
                 DispatchQueue.main.async {
+                    guard let tipPoint = normalizedFingerTip else {
+                        return
+                    }
+
+                    // We use a coreVideo function to get the image coordinate from the normalized point
+                    let imageFingerPoint = VNImagePointForNormalizedPoint(tipPoint, Int(self.view.bounds.size.width), Int(self.view.bounds.size.height))
+
+                    // And here again we need to hitTest to translate from 2D coordinates to 3D coordinates
+                    let hitTestResults = self.sceneView.hitTest(imageFingerPoint, types: .existingPlaneUsingExtent)
+                    guard let hitTestResult = hitTestResults.first else { return }
+
+                    // We position our touchNode slighlty above the plane (1cm).
+                    self.touchNode.simdTransform = hitTestResult.worldTransform
+                    self.touchNode.position.y += 0.01
+                    self.touchNode.isHidden = false
+
                     self.previewView.image = UIImage(ciImage: CIImage(cvPixelBuffer: outputBuffer))
                 }
 
