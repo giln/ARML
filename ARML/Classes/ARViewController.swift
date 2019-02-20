@@ -43,6 +43,34 @@ open class ARViewController: UIViewController, ARSessionDelegate, ARSCNViewDeleg
         previewView.translatesAutoresizingMaskIntoConstraints = false
         previewView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         previewView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+
+        sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewDidTap(recognizer:))))
+
+        sceneView.autoenablesDefaultLighting = true
+
+    }
+
+    // MARK: - Actions
+
+    @objc private func viewDidTap(recognizer: UITapGestureRecognizer) {
+        // We get the tap location as a 2D Screen coordinate
+        let tapLocation = recognizer.location(in: sceneView)
+
+        // To transform our 2D Screen coordinates to 3D screen coordinates we use hitTest function
+        let hitTestResults = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
+
+        // We cast a ray from the point tapped on screen, and we return any intersection with existing planes
+        guard let hitTestResult = hitTestResults.first else { return }
+
+        let ball = BallNode(radius: 0.05)
+
+        // We place the ball at hit point
+        ball.simdTransform = hitTestResult.worldTransform
+        // We place it slightly (20cm) above the plane
+        ball.position.y += 0.2
+
+        // We add the node to the scene
+        sceneView.scene.rootNode.addChildNode(ball)
     }
 
     // MARK: - ARSessionDelegate
