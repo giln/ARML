@@ -13,6 +13,8 @@ open class ARViewController: UIViewController, ARSessionDelegate {
 
     private let sceneView = ARSCNView()
     private var currentBuffer: CVPixelBuffer?
+    private let handDetector = HandDetector()
+    private let previewView = UIImageView()
 
     // MARK: - Lifecycle
 
@@ -29,6 +31,12 @@ open class ARViewController: UIViewController, ARSessionDelegate {
 
         // Run the session with the configuration
         sceneView.session.run(configuration)
+
+        view.addSubview(previewView)
+
+        previewView.translatesAutoresizingMaskIntoConstraints = false
+        previewView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        previewView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 
     // MARK: - ARSessionDelegate
@@ -49,8 +57,19 @@ open class ARViewController: UIViewController, ARSessionDelegate {
 
     private func startDetection() {
         // Here we will do our CoreML request on currentBuffer
+        guard let someBuffer = currentBuffer else { return }
 
-        // Release currentBuffer to allow processing next frame
-        currentBuffer = nil
+        handDetector.performDetection(inputBuffer: someBuffer) { outputPixelBuffer, _ in
+
+            if let outputBuffer = outputPixelBuffer {
+
+                DispatchQueue.main.async {
+                    self.previewView.image = UIImage(ciImage: CIImage(cvPixelBuffer: outputBuffer))
+                }
+
+            }
+            // Release currentBuffer to allow processing next frame
+            self.currentBuffer = nil
+        }
     }
 }
