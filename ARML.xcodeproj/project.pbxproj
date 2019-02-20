@@ -18,6 +18,7 @@
 		A7A9EF5221F9F78200604D4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7A9EF5021F9F78200604D4F /* LaunchScreen.storyboard */; };
 		A7A9EF6021FA05FE00604D4F /* HandModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF5F21FA05FE00604D4F /* HandModel.mlmodel */; };
 		A7A9EF6721FF513800604D4F /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A9EF6621FF513800604D4F /* ARViewController.swift */; };
+		A7CF0802221D8A6E00D0B3F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7A9EF5A21F9FB5500604D4F /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -183,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7A9EF4821F9F77E00604D4F /* art.scnassets in Resources */,
+				A7CF0802221D8A6E00D0B3F8 /* Assets.xcassets in Resources */,
 				A7A9EF5221F9F78200604D4F /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
